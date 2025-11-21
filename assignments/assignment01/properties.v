@@ -44,7 +44,7 @@ A3: assert property (P3);
 
 property P4;
   //A4: Yellow car light can only change to red, or remain yellow.
-  (@(posedge clk) (car_light == YELLOW |=> (car_light == RED || car_light == YELLOW)))
+  (@(posedge clk) (car_light == YELLOW |=> (car_light == RED || car_light == YELLOW)));
 endproperty
 A4: assert property (P4);
 
@@ -74,7 +74,7 @@ A8: assert property (P8);
 
 property P9;
   // A9: If pedestrian light is green, then car light in the previous cycle is red.
-  (@(posedge clk) 1 ##1 (pedestrian_light == GREEN) |-> $past(car_light, 1) == RED )
+  (@(posedge clk) 1 ##1 (pedestrian_light == GREEN) |-> $past(car_light, 1) == RED );
 endproperty
 A9: assert property (P9);
 
