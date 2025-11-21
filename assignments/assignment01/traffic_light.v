@@ -73,19 +73,19 @@ end
 // Pedestrian traffic light state machine
 always @(*) begin
     case (pedestrian_state)
-        GREEN: begin
+        GREEN[1]: begin
             if (car_state == RED && car_timer >= RED_TIME-1)
-                next_pedestrian_state = RED;
+                next_pedestrian_state = RED[1];
             else
-                next_pedestrian_state = GREEN;
+                next_pedestrian_state = GREEN[1];
         end
         RED: begin
             if (next_car_state != RED || car_timer != 0)
-                next_pedestrian_state = RED;
+                next_pedestrian_state = RED[1];
             else
-                next_pedestrian_state = GREEN;
+                next_pedestrian_state = GREEN[1];
         end
-        default: next_pedestrian_state = RED;
+        default: next_pedestrian_state = RED[1];
     endcase
 end
 
@@ -99,9 +99,9 @@ always @(*) begin
     endcase
 
     case (pedestrian_state)
-        GREEN:   pedestrian_light = GREEN;   // Green light
-        RED:     pedestrian_light = RED;     // Red light
-        default: pedestrian_light = RED;     // Default to red
+        GREEN:   pedestrian_light = GREEN[1];   // Green light
+        RED:     pedestrian_light = RED[1];     // Red light
+        default: pedestrian_light = RED[1];     // Default to red
     endcase
 end
 

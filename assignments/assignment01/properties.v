@@ -25,6 +25,7 @@ import state_pkg::*;
 // - The answer for the first assert (A1) is given as an example.
 
 // Example solution for the first specificaton:
+// A1: Always either the car light is red, or the pedestrian light is red (or both).
 property P1;
    (@(posedge clk) (car_light == RED || pedestrian_light == RED));
 endproperty
