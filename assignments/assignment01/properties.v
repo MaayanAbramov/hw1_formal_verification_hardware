@@ -8,7 +8,7 @@ input clk;
 input rst;
 input wire pedestrian_btn;
 input reg [1:0] car_light;
-input reg pedestrian_light;
+input reg [1:0] pedestrian_light;
 // Note that both car_light and pedestrian_light are defined as inputs above,
 // even though they are defined as outputs in the module we want to monitor.
 
