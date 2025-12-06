@@ -11,20 +11,20 @@ module properties #(parameter FLOORS = 5)
     input                    DoorsOp doorsOp,
     input                    EngineOp engineOp
 );
- logic [FLOORS-1:0] floor_on_first_cycle;
- logic first_clock;
- always @(posedge clk) 
-    begin
-        if (rst) begin
-            first_clock <= 1'b1 ;
+logic [FLOORS-1:0] floor_on_first_cycle;
+logic first_clock;
+
+always @(posedge clk) begin
+    if (rst) begin
+        first_clock <= 1'b1;  // set first_clock after reset
     end else begin
-    first_clock <=0'b1
-    if (first_clock == 1'b1) begin
-    floor_on_first_cycle <= currentFloor;
+        if (first_clock == 1'b1) begin
+            floor_on_first_cycle <= currentFloor; // capture currentFloor on first cycle
+            first_clock <= 1'b0;                 // then clear first_clock
+        end
     end
-	clock_rise <= 1'b1
-    end
-end 
+end
+
 sequence sQ7;
     !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && $changed(currentFloor) )[->FLOORS]);
 endsequence
