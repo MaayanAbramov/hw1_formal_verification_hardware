@@ -48,7 +48,7 @@ assume_Q1a: assume property (prop_Q1a);
 // QUESTION 1(b): Assume we start from some (specific, single) floor.
 // NOTE: You are required to use auxiliary code for this question.
 property prop_Q1b;
-    @(posedge clk) $onehot(floor_on_first_cycle) == true ; // EDIT THIS LINE
+    @(posedge clk) $onehot(floor_on_first_cycle) == 1 ; // EDIT THIS LINE
 endproperty
 assume_Q1b: assume property (prop_Q1b);
 
