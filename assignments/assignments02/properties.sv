@@ -54,13 +54,13 @@ assume_Q1b: assume property (prop_Q1b);
 
 // QUESTION 2: Check we don't hit the basement.
 property prop_Q2;
-    @(posedge clk) (currentFloor[0] == 1) |-> !(direction == DOWN) ; // EDIT THIS LINE
+    @(posedge clk) (currentFloor[0] == 1) |-> (direction == UP) ; // EDIT THIS LINE
 endproperty
 assert_Q2: assert property (prop_Q2);
 
 // QUESTION 3: Check we don't hit the roof.
 property prop_Q3;
-    @(posedge clk) (currentFloor[FLOORS-1] == 1) |-> !(direction == UP); // EDIT THIS LINE
+    @(posedge clk) (currentFloor[FLOORS-1] == 1) |-> (direction == DOWN); // EDIT THIS LINE
 endproperty
 assert_Q3: assert property (prop_Q3);
 
