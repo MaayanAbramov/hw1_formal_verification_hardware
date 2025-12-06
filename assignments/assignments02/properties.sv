@@ -66,7 +66,7 @@ assert_Q3: assert property (prop_Q3);
 
 // QUESTION 4: Check door safety.
 property prop_Q4;
-    @(posedge clk) (doorsOp == OPEN) |-> !(engineOp = GO); // EDIT THIS LINE
+    @(posedge clk) (doorsOp == OPEN) |-> !(engineOp == GO); // EDIT THIS LINE
 endproperty
 assert_Q4: assert property (prop_Q4);
 
