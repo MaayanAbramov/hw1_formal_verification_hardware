@@ -122,7 +122,7 @@ endsequence
 
 // QUESTION 9:
 property prop_Q9;
-    @(posedge clk) sQ9_seq[->10]; // EDIT THIS LINE
+    @(posedge clk) sQ9_seq[*10]; // EDIT THIS LINE
 endproperty
 cover_Q9: cover property (prop_Q9);
 
