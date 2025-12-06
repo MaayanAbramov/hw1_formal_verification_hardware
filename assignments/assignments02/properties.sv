@@ -41,11 +41,11 @@ end
 
 
 sequence sQ7;
-    !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && going_up == 1'b1 )[->FLOOR]);
+    !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && going_up == 1'b1 )[->FLOORS-1]);
 endsequence
 
 sequence sQ8;
-    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && going_up == 1'b0 )[->FLOOR]);
+    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && going_up == 1'b0 )[->FLOORS-1]);
 endsequence
 
 // ASSUME 1: Assume elevator moves up if engineOp is UP.
