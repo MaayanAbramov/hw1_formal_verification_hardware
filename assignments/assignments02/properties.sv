@@ -12,10 +12,13 @@ module properties #(parameter FLOORS = 5)
     input                    EngineOp engineOp
 );
  logic [FLOORS-1:0] floor_on_first_cycle;
+ logic clook_rise = 0'b0;
  always @(posedge clk) 
     begin
-        if ($rose(rst)) begin
+        if (clock_rise  == 0'b0) begin
             floor_on_first_cycle <= currentFloor;
+    end else begin
+    clock_rise <= 1'b1
     end
  end
 
@@ -48,7 +51,7 @@ assume_Q1a: assume property (prop_Q1a);
 // QUESTION 1(b): Assume we start from some (specific, single) floor.
 // NOTE: You are required to use auxiliary code for this question.
 property prop_Q1b;
-    @(posedge clk) $onehot(floor_on_first_cycle) == 1 ; // EDIT THIS LINE
+    @(posedge clk) $onehot(floor_on_first_cycle) == 1'b1 ; // EDIT THIS LINE
 endproperty
 assume_Q1b: assume property (prop_Q1b);
 
