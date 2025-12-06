@@ -54,7 +54,7 @@ assume_Q1b: assume property (prop_Q1b);
 
 // QUESTION 2: Check we don't hit the basement.
 property prop_Q2;
-    @(posedge clk) (currentFloor[0] == 1) |-> (direction == UP) ; // EDIT THIS LINE
+    @(posedge clk) (currentFloor[0] == 1) |=> (direction == UP) ; // EDIT THIS LINE
 endproperty
 assert_Q2: assert property (prop_Q2);
 
