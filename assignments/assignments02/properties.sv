@@ -12,13 +12,16 @@ module properties #(parameter FLOORS = 5)
     input                    EngineOp engineOp
 );
  logic [FLOORS-1:0] floor_on_first_cycle;
- logic clook_rise = 0'b0;
+ logic first_clock;
  always @(posedge clk) 
     begin
-        if (clock_rise  == 0'b0) begin
-            floor_on_first_cycle <= currentFloor;
+        if (rst) begin
+            first_clock <= 1'b1 ;
     end else begin
-    if(clock_rise == 0'b0) begin
+    first_clock <=0'b1
+    if (first_clock == 1'b1) begin
+    floor_on_first_cycle <= currentFloor;
+    end
 	clock_rise <= 1'b1
     end
 end 
