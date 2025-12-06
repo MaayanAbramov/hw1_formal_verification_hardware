@@ -26,11 +26,11 @@ always @(posedge clk) begin
 end
 
 sequence sQ7;
-    !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && $changed(currentFloor) )[->FLOORS]);
+    !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && $changed(currentFloor) )[*FLOORS]);
 endsequence
 
 sequence sQ8;
-    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && $changed(currentFloor) )[->FLOORS]);
+    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && $changed(currentFloor) )[*FLOORS]);
 endsequence
 
 // ASSUME 1: Assume elevator moves up if engineOp is UP.
