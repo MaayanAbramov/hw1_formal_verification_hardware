@@ -18,10 +18,10 @@ module properties #(parameter FLOORS = 5)
         if (clock_rise  == 0'b0) begin
             floor_on_first_cycle <= currentFloor;
     end else begin
-    clock_rise <= 1'b1
+    if(clock_rise == 0'b0) begin
+	clock_rise <= 1'b1
     end
- end
-
+end 
 sequence sQ7;
     !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && $changed(currentFloor) )[->FLOORS]);
 endsequence
