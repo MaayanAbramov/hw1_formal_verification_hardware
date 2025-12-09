@@ -27,7 +27,20 @@ end
 
 
 sequence sQ7;
-    1 ##1 (direction == UP) throughout (##1( engineOp == STOP && doorsOp == OPEN && currentFloor[0] == 1]) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)) (##1( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor))[->FLOORS-2]));
+    (direction == UP) throughout
+        (
+            (engineOp == STOP && doorsOp == OPEN && currentFloor[0] == 1)
+            ##1
+            (engineOp == GO && doorsOp == CLOSE && currentFloor[0] == 1)
+            ##1
+            (
+                (engineOp == STOP && doorsOp == OPEN &&
+                 currentFloor == $past(currentFloor << 1))
+                ##1
+                (engineOp == GO && doorsOp == CLOSE &&
+                 currentFloor == $past(currentFloor))
+            )[->FLOORS-2]
+        );
 endsequence
 
 sequence sQ8;
