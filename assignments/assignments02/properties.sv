@@ -104,7 +104,7 @@ cover_Q8: cover property (prop_Q8);
 
 
 sequence sQ9_seq;
-    sQ7 ##1 sQ8;
+    sQ7 ##0 sQ8;
 endsequence
 
 // QUESTION 9:
