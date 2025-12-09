@@ -31,7 +31,7 @@ sequence sQ7;
 endsequence
 
 sequence sQ8;
-    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && (currentFloor == $past(currentFloor >> 1)))[->FLOORS-1]);
+    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && (currentFloor == $past(currentFloor >> 1)))[->FLOORS]);
 endsequence
 
 // ASSUME 1: Assume elevator moves up if engineOp is UP.
