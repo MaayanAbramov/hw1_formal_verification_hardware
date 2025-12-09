@@ -27,7 +27,7 @@ end
 
 
 sequence sQ7;
-    (direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor))[->FLOORS-2]));
+    1 ##1 (direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor))[->FLOORS-2])) ##0 (engineOp == STOP && doorsOp == OPEN && currentFloor[FLOORS-1] == 1)[->1];
 endsequence
 
 sequence sQ8;
