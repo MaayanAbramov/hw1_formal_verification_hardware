@@ -13,39 +13,25 @@ module properties #(parameter FLOORS = 5)
 );
 logic [FLOORS-1:0] floor_on_first_cycle;
 logic first_clock;
-logic going_up;           // true if elevator is going up
-logic [FLOORS-1:0] prev_floor;
 
 always @(posedge clk) begin
     if (rst) begin
         first_clock <= 1'b1;         // first cycle after reset
-        going_up <= 1'b0;            // default
-        prev_floor <= 0;
     end else begin
         if (first_clock == 1'b1) begin
             floor_on_first_cycle <= currentFloor; // capture floor on first cycle
-            prev_floor <= currentFloor;
             first_clock <= 1'b0;                 // clear first_clock
-            going_up <= 1'b0;                     // not defined yet
-        end else begin
-            // From cycle 2 onwards, check direction
-            if (currentFloor > prev_floor)
-                going_up <= 1'b1;
-            else
-                going_up <= 1'b0;
-
-            prev_floor <= currentFloor; // update previous floor
-        end
+        end 
     end
 end
 
 
 sequence sQ7;
-    !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && going_up == 1'b1 )[->FLOORS-1]);
+    !(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1))[->FLOORS]);
 endsequence
 
 sequence sQ8;
-    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && going_up == 1'b0 )[->FLOORS-1]);
+    !(direction == UP) throughout (( engineOp == STOP && doorsOp == OPEN && (currentFloor == $past(currentFloor >> 1)))[->FLOORS-1]);
 endsequence
 
 // ASSUME 1: Assume elevator moves up if engineOp is UP.
