@@ -1,6 +1,6 @@
 import elevator_pkg::*;
 
-module elevator #(parameter FLOORS = 5)
+module elevator #(parameter FLOORS = 10)
 (
     input logic clk,
     input logic rst,
