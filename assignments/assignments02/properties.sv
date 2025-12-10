@@ -95,7 +95,7 @@ cover_Q6: cover property (prop_Q6);
 
 // QUESTION 7:
 property prop_Q7;
-    @(posedge clk) sQ7;  // EDIT THIS LINE
+    @(posedge clk) sQ7_a;  // EDIT THIS LINE
 endproperty
 cover_Q7: cover property (prop_Q7);
 
