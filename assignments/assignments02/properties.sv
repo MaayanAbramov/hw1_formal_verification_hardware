@@ -31,20 +31,29 @@ sequence sQ7;
     (direction == UP) throughout (currentFloor[0] == 1 ##1 ( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1)[->FLOORS-2]));
 endsequence
 sequence sQ7_a;
-  // The Constraint: Direction must be UP the entire time the sequence runs
-  (direction == UP) 
-  throughout 
+  // PART 1: The climb up to the second-to-last floor
+  // The direction must be UP during this entire block
   (
-    // The Sequence: Start at Floor 0 -> Climb and stop -> Reach Top
-    (currentFloor[0] == 1 && engineOp == STOP && doorsOp == OPEN) 
-    ##1 
-    // The "Step": Check that we moved up 1 floor from the past state
-    // We repeat this check for the intermediate floors
-    (engineOp == STOP && doorsOp == OPEN && currentFloor == ($past(currentFloor) << 1)) [->FLOORS-2]
-    // Final State: Top Floor)
+    (direction == UP) 
+    throughout 
+    (
+      // Start at Floor 0
+      (currentFloor[0] == 1 && engineOp == STOP && doorsOp == OPEN) 
+      
+      ##1 
+      
+      // Middle Steps: Repeat until we hit the second-to-last floor
+      (engineOp == STOP && doorsOp == OPEN && currentFloor == ($past(currentFloor) << 1)) [->FLOORS-2]
+    )
   )
-    ##[1:$]  (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN);
-endsequence;
+
+  // PART 2: The final step to the Top Floor
+  // This is OUTSIDE the 'throughout', so 'direction' is allowed to be DOWN here.
+  ##[1:$] 
+  (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN);
+
+endsequence
+
 sequence sQ8;
     (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
 
