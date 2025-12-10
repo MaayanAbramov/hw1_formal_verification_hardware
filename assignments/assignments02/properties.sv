@@ -54,11 +54,28 @@ sequence sQ7_a;
 
 endsequence
 
-sequence sQ8;
-    (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
+sequence sQ8_a;
+  // PART 1: The climb up to the second-to-last floor
+  // The direction must be UP during this entire block
+  (
+    (direction == DOWN) 
+    throughout 
+    (
+      // Start at Floor 0
+      (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN) 
+      
+      ##1 
+      
+      // Middle Steps: Repeat until we hit the second-to-last floor
+      (engineOp == STOP && doorsOp == OPEN && currentFloor == ($past(currentFloor) >> 1)) [->FLOORS-2]
+    )
+  )
 
+  // PART 2: The final step to the Top Floor
+  // This is OUTSIDE the 'throughout', so 'direction' is allowed to be DOWN here.
+  ##[1:$] 
+  (currentFloor[0] == 1 && engineOp == STOP && doorsOp == OPEN);
 endsequence
-
 // ASSUME 1: Assume elevator moves up if engineOp is UP.
 property prop_1;
     @(posedge clk) (engineOp == GO) && (direction == UP) |=> (currentFloor == $past(currentFloor << 1));
