@@ -139,13 +139,13 @@ cover_Q7: cover property (prop_Q7);
 
 // QUESTION 8:
 property prop_Q8;
-    @(posedge clk) sQ8; // EDIT THIS LINE
+    @(posedge clk) sQ8_a; // EDIT THIS LINE
 endproperty
 cover_Q8: cover property (prop_Q8);
 
 
 sequence sQ9_seq;
-    sQ7 ##0 sQ8;
+    sQ7_a ##0 sQ8_a;
 endsequence
 
 // QUESTION 9:
