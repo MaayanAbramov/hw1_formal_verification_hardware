@@ -41,10 +41,8 @@ sequence sQ7_a;
     // The "Step": Check that we moved up 1 floor from the past state
     // We repeat this check for the intermediate floors
     (engineOp == STOP && doorsOp == OPEN && currentFloor == ($past(currentFloor) << 1)) [=FLOORS-2]
-    ##1
-    // Final State: Top Floor
-  )
-  ##0  (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN)[->1];
+    // Final State: Top Floor)
+  ##0  (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN)[->1]);
 endsequence;
 sequence sQ8;
     (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
