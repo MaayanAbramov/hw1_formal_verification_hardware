@@ -32,7 +32,7 @@ sequence sQ7;
 endsequence
 
 sequence sQ8;
-    §(direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
+    (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
 
 endsequence
 
@@ -93,7 +93,7 @@ cover_Q6: cover property (prop_Q6);
 
 // QUESTION 7:
 property prop_Q7;
-    @(posedge clk)  sQ7;  // EDIT THIS LINE
+    @(posedge clk) sQ7;  // EDIT THIS LINE
 endproperty
 cover_Q7: cover property (prop_Q7);
 
