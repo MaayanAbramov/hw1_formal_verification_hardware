@@ -31,7 +31,7 @@ sequence sQ7;
     (direction == UP) throughout (currentFloor[0] == 1 ##1 ( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1)[->FLOORS-2]));
 endsequence
 sequence sQ7_a;
-  ((currentFloor[0]==1 &&  engineOp == STOP && doorsOp == OPEN) ##1 ( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1)[->FLOORS-2])) within  (direction == UP) until  (currentFloor[FLOORS-1] ==1  && engineOp == STOP && doorsOp == OPEN) 
+  ((currentFloor[0]==1 &&  engineOp == STOP && doorsOp == OPEN) ##1 ( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1)[->FLOORS-2])) within  (direction == UP) until  (currentFloor[FLOORS-1] ==1  && engineOp == STOP && doorsOp == OPEN) ;
 endsequence
 sequence sQ8;
     (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
