@@ -42,8 +42,8 @@ sequence sQ7_a;
     // We repeat this check for the intermediate floors
     (engineOp == STOP && doorsOp == OPEN && currentFloor == ($past(currentFloor) << 1)) [->FLOORS-2]
     // Final State: Top Floor)
-  );
- //##1  (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN)[->1]);
+  )
+    ##[1:$]  (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN);
 endsequence;
 sequence sQ8;
     (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
