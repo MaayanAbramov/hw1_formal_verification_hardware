@@ -31,8 +31,6 @@ sequence sQ7;
     (direction == UP) throughout (currentFloor[0] == 1 ##1 ( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor << 1)[->FLOORS-2]));
 endsequence
 sequence sQ7_a;
-property p_elevator_climb_check;
-  @(posedge clk)
   // The Constraint: Direction must be UP the entire time the sequence runs
   (direction == UP) 
   throughout 
@@ -47,9 +45,7 @@ property p_elevator_climb_check;
     // Final State: Top Floor
     (currentFloor[FLOORS-1] == 1 && engineOp == STOP && doorsOp == OPEN)
   );
-endproperty
-
-assert property (p_elevator_climb_check);endsequence
+endsequence;
 sequence sQ8;
     (direction == DOWN) throughout (( engineOp == STOP && doorsOp == OPEN && currentFloor == $past(currentFloor >> 1) ##1 ( engineOp == GO && doorsOp == CLOSE && currentFloor == $past(currentFloor)[->FLOORS-1])));
 
