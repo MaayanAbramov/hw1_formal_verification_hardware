@@ -118,7 +118,7 @@ begin
     end
 end
 property P;
-    @(posedge clk) disable iff (!rst) (is_sampled && (items_ahead == 0) && do_deq |-> (deq_data == sampled_data)); // IMPLEMENT THE PROPERTY HERE
+    @(posedge clk) disable iff (!rst) (is_sampled && (items_ahead == 0) && do_deq |=> (deq_data == sampled_data)); // IMPLEMENT THE PROPERTY HERE
 endproperty
 
 A: assert property (P);
