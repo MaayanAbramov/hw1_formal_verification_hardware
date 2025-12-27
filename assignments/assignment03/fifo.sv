@@ -82,9 +82,43 @@ module fifo #(
 // 4. Do not change the label of the assert (keep it "A").
 
 // IMPLEMENT THE AUXILIARY CODE HERE
+wire select; // non-deterministic selection
 
+reg [WIDTH-1:0] sampled_data;
+reg [PTRW : 0] items_ahead;
+reg is_sampled;
+
+always @(posedge clk) 
+begin
+  if (~rst) 
+    begin
+      is_sampled <= 1'b0;
+      items_ahead <= '0;
+      sampled_data <= '0;
+    end
+  else
+    begin
+      if (do_enq && !is_sampled && select )
+        begin
+          sampled_data <= enq_data;
+          items_ahead <= count;
+          is_sampled <= 1'b1;
+        end
+      if (is_sampled && do_deq )
+        begin
+          if(items_ahead > 0)
+            begin
+              items_ahead <= items_ahead -1'b1;
+            end
+          else
+            begin
+              is_sampled <=1'b0;
+            end
+        end
+    end
+end
 property P;
-    @(posedge clk) (1); // IMPLEMENT THE PROPERTY HERE
+    @(posedge clk) (is_sampled && (items_ahead == 0) && do_deq |-> (deq_data == sampled_data)); // IMPLEMENT THE PROPERTY HERE
 endproperty
 
 A: assert property (P);
