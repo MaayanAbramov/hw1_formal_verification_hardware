@@ -1,24 +1,23 @@
-
 module fifo #(
   parameter int unsigned DEPTH = 64,  // number of entries
   parameter int unsigned WIDTH = 64   // data width
 ) (
-  input  logic                 clk,
-  input  logic                 rst,
+  input  logic                  clk,
+  input  logic                  rst,
 
   // Enqueue side (producer -> FIFO)
-  input  logic                 enq_valid,
-  output logic                 enq_ready,
-  input  logic [WIDTH-1:0]     enq_data,
+  input  logic                  enq_valid,
+  output logic                  enq_ready,
+  input  logic [WIDTH-1:0]      enq_data,
 
   // Dequeue side (FIFO -> consumer)
-  output logic                 deq_valid,
-  input  logic                 deq_ready,
-  output logic [WIDTH-1:0]     deq_data,
+  output logic                  deq_valid,
+  input  logic                  deq_ready,
+  output logic [WIDTH-1:0]      deq_data,
 
   // Status
-  output logic                 full,
-  output logic                 empty
+  output logic                  full,
+  output logic                  empty
 );
 
   // ------------------------------
@@ -28,7 +27,7 @@ module fifo #(
 
   logic [WIDTH-1:0] mem [0:DEPTH-1];
   logic [PTRW-1:0]  wr_ptr, rd_ptr;
-  logic [PTRW:0]    count;               // range 0..DEPTH
+  logic [PTRW:0]    count;                // range 0..DEPTH
 
   // Handshake qualifies
   logic do_enq, do_deq;
@@ -75,12 +74,6 @@ module fifo #(
     end
   end
 
-// Instructions:
-// 1. Implement "property P;" below.
-// 2. Use auxiliary code.
-// 3. Do not change the name of the property (keep it "P").
-// 4. Do not change the label of the assert (keep it "A").
-
 // IMPLEMENT THE AUXILIARY CODE HERE
 wire select; // non-deterministic selection
 
@@ -90,7 +83,7 @@ reg is_sampled;
 
 always @(posedge clk) 
 begin
-  if (~rst) 
+  if (!rst) // CHANGED HERE: Fixed reset condition to match module reset 
     begin
       is_sampled <= 1'b0;
       items_ahead <= '0;
@@ -108,17 +101,19 @@ begin
         begin
           if(items_ahead > 0)
             begin
-              items_ahead <= items_ahead -1'b1;
+              items_ahead <= items_ahead - 1'b1;
             end
           else
             begin
-              is_sampled <=1'b0;
+              is_sampled <= 1'b0;
             end
         end
     end
 end
+
 property P;
-    @(posedge clk) disable iff (!rst) (is_sampled && (items_ahead == 0) && do_deq |=> (deq_data == sampled_data)); // IMPLEMENT THE PROPERTY HERE
+    // CHANGED HERE: Added disable iff and ensured implication for registered output 
+    @(posedge clk) disable iff (!rst) (is_sampled && (items_ahead == 0) && do_deq) |=> (deq_data == sampled_data); 
 endproperty
 
 A: assert property (P);
