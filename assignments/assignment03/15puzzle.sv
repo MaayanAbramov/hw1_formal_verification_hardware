@@ -74,7 +74,7 @@ always @ (posedge clk) begin
 end
 
 // The solution to the 15-puzzle:
-wire solution = cells[0][0] == 1 &
+wire solution = cells[0][0] == 0 &
                 cells[0][1] == 2 &
                 cells[0][2] == 3 &
                 cells[0][3] == 4 &
