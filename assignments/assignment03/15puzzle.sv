@@ -45,9 +45,9 @@ always @ (posedge clk) begin
     visited[3][1] <= 0;
     visited[3][2] <= 0;
     visited[3][3] <= 0;
+end else begin
     if (direction == 2'b00 && empty_y > 3'd0) begin // left
         cells[empty_x][empty_y] <= cells[empty_x][empty_y-1];
-  end else begin
         cells[empty_x][empty_y-1] <= 0;
         visited[empty_x][empty_y-1]<=1;
         empty_y <= empty_y-1;
@@ -122,7 +122,7 @@ c: cover property (@(posedge clk) solution);
 // IMPLEMENT THE AUXILIARY CODE HERE IF NEEDED
 
 property P;
-    @(posedge clk) (empty_cell_visited_all);
+    @(posedge clk)(empty_x == 0 && empty_y == 0 ) ##[1:$] (empty_y == 3 &&empty_cell_visited_all && solution && empty_x == 3);
 endproperty
 
 A: cover property (P);
