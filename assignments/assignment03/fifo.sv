@@ -101,12 +101,12 @@ begin
       if (do_enq && !is_sampled && select)
         begin
           sampled_data <= enq_data;
-          items_ahead <= do_deq ? (count - 1'b1) : count; // CHANGED HERE
+          items_ahead <= do_deq ? (count ) : count +1'b1; // CHANGED HERE
           is_sampled <= 1'b1;
         end
       else if (is_sampled && do_deq) // CHANGED HERE
         begin
-          if(items_ahead >= 0)
+          if(items_ahead > 0)
             begin
               items_ahead <= items_ahead - 1'b1;
             end
