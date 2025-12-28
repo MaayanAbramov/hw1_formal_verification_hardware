@@ -6,7 +6,7 @@ output reg[3:0] cells[3:0][3:0];
 reg[1:0]        empty_x; // x-position of the empty cell
 reg[1:0]        empty_y; // y-position of the empty cell
 reg visited[3:0][3:0]; // TODO : please check if this is valid 
-
+reg[3:0] i,j;
 always @ (posedge clk) begin
   if (~rst) begin
     // Initial state of the board
@@ -37,7 +37,7 @@ always @ (posedge clk) begin
     visited[1][1] <= 0;
     visited[1][2] <= 0;
     visited[1][3] <= 0;
-    visited[2][0] <= 0;
+    visited[2][0] <= 1;
     visited[2][1] <= 0;
     visited[2][2] <= 0;
     visited[2][3] <= 0;
