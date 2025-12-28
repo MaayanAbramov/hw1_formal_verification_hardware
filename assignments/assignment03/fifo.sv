@@ -74,13 +74,43 @@ module fifo #(
       endcase
     end
   end
-
+  wire en;
+  logic next_cycle_compare_value_and_deq_data;
   logic [WIDTH-1:0] value;
-  stable_value: assume property (@(posedge clk) 1 ##1 $stable(value));
-  weak_consistency: assert property (
-    do_enq && enq_data == value |-> do_deq[*DEPTH] implies ##[1:DEPTH] $past(do_deq) && deq_data == value);
-
-  full_empty: cover property (@(posedge clk) !full ##[1:$] full ##[1:$] empty);
-  count_range: assert property (@(posedge clk) count <= DEPTH);
-
+  logic is_sampled;
+  logic [PTRW:0] items_ahead;
+  always @(posedge clk)
+  begin
+	if(~rst)
+	 begin
+		is_sampled <= 1'b0;
+		items_ahead <= '0;
+		next_cycle_compare_value_and_deq_data = 1'b0; // this is only for cover purposes. this should be changed to 1'b0;	
+	end
+	if(!is_sampled && en && do_enq)
+	 begin
+	 	is_sampled <= 1'b1;
+		value <= enq_data;
+		items_ahead <= count;
+	 end
+	else
+		 begin
+			if(is_sampled && do_deq)
+			begin
+				if(items_ahead > 0 )
+				begin
+					items_ahead <= items_ahead -1'b1;	
+				end
+				if(items_ahead == 0) 
+				begin
+					next_cycle_compare_value_and_deq_data <= 1'b1;
+					is_sampled <= 1'b0;		
+				end
+			end
+		end
+  end 
+  property P;
+   @(posedge clk) ((next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) |=> (deq_data == value) );
+  endproperty 
+  A: assert property (P);
 endmodule
