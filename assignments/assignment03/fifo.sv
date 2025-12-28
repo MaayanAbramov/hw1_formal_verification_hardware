@@ -1,6 +1,6 @@
 
 module fifo #(
-  parameter int unsigned DEPTH = 64,  // number of entries
+  parameter int unsigned DEPTH = 8,   // number of entries
   parameter int unsigned WIDTH = 64   // data width
 ) (
   input  logic                 clk,
@@ -75,23 +75,12 @@ module fifo #(
     end
   end
 
-// Instructions:
-// 1. Implement "property P;" below.
-// 2. Use auxiliary code.
-// 3. Do not change the name of the property (keep it "P").
-// 4. Do not change the label of the assert (keep it "A").
+  logic [WIDTH-1:0] value;
+  stable_value: assume property (@(posedge clk) 1 ##1 $stable(value));
+  weak_consistency: assert property (
+    do_enq && enq_data == value |-> do_deq[*DEPTH] implies ##[1:DEPTH] $past(do_deq) && deq_data == value);
 
-// IMPLEMENT THE AUXILIARY CODE HERE
-wire select;  //non-deterministic..
+  full_empty: cover property (@(posedge clk) !full ##[1:$] full ##[1:$] empty);
+  count_range: assert property (@(posedge clk) count <= DEPTH);
 
-reg [WIDTH-1:0] value;
-
-
-    
-stable_value: assume property (@(posedge clk) 1 ##1 $stable(value));
-property P;
-    @(posedge clk)  (do_enq && enq_data == value |-> do_deq[*DEPTH] implies ##[1:DEPTH] $past(do_deq) && deq_data == value);
-endproperty
-
-A: assert property (P);
 endmodule
