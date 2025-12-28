@@ -122,7 +122,7 @@ c: cover property (@(posedge clk) solution);
 // IMPLEMENT THE AUXILIARY CODE HERE IF NEEDED
 
 property P;
-    @(posedge clk)(empty_x == 0 && empty_y == 0 ) ##[1:$] (empty_y == 3 &&empty_cell_visited_all && solution && empty_x == 3);
+    @(posedge clk)(empty_x == 0 && empty_y == 0 ) ##[1:$] (empty_cell_visited_all && solution);
 endproperty
 
 A: cover property (P);
