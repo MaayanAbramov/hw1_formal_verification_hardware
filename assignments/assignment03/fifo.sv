@@ -119,7 +119,7 @@ begin
 end
 
 property P;
-    @(posedge clk) (is_sampled && (items_ahead == 0) && do_deq) |=> (deq_data == sampled_data); // CHANGED HERE
+    @(posedge clk) 1 ##[5:10] (is_sampled && (items_ahead == 0) && do_deq) |=> (deq_data == sampled_data); // CHANGED HERE
 endproperty
 
 A: assert property (P);
