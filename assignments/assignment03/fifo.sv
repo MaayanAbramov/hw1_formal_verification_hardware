@@ -123,5 +123,5 @@ property P;
 endproperty
 
 A: assert property (P);
-
+B: cover property (P);
 endmodule
