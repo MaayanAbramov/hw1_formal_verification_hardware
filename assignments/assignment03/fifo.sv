@@ -85,7 +85,7 @@ module fifo #(
 	 begin
 		is_sampled <= 1'b0;
 		items_ahead <= '0;
-		next_cycle_compare_value_and_deq_data = 1'b0; // this is only for cover purposes. this should be changed to 1'b0;	
+		next_cycle_compare_value_and_deq_data <= 1'b0; // this is only for cover purposes. this should be changed to 1'b0;	
 	end
 	if(!is_sampled && en && do_enq)
 	 begin
