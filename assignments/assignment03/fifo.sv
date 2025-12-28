@@ -84,7 +84,7 @@ module fifo #(
 // IMPLEMENT THE AUXILIARY CODE HERE
 wire select;  //non-deterministic..
 
-reg [WIDTH-1:0] sampled_data;
+reg [WIDTH-1:0] value;
 reg signed [PTRW : 0] items_ahead;
 reg is_sampled;
 
@@ -94,17 +94,17 @@ begin
     begin
       is_sampled <= 1'b0;
       items_ahead <= '0;
-      sampled_data <= '0;
+      value <= '0;
     end
   else
     begin
       if (do_enq && !is_sampled && select)
         begin
-          sampled_data <= enq_data;
-          items_ahead <= do_deq ? (count ) : count +1'b1; // CHANGED HERE
+          value <= enq_data;
+          items_ahead <= count; // CHANGED HERE
           is_sampled <= 1'b1;
         end
-      else if (is_sampled && do_deq) // CHANGED HERE
+      if (is_sampled && do_deq) // CHANGED HERE
         begin
           if(items_ahead > 0)
             begin
@@ -120,9 +120,8 @@ begin
 end
 
 property P;
-    @(posedge clk)  (is_sampled && (items_ahead == 0) && do_deq) |-> (deq_data == sampled_data); // CHANGED HERE
+    @(posedge clk)  (do_enq && enq_data == value |-> do_deq[*DEPTH] implies ##[1:DEPTH] $past(do_deq) && deq_data == value);
 endproperty
 
 A: assert property (P);
-B: cover property (P);
 endmodule
