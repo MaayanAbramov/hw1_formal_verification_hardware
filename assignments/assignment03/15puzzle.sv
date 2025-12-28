@@ -37,8 +37,8 @@ always @ (posedge clk) begin
     visited[1][1] <= 0;
     visited[1][2] <= 0;
     visited[1][3] <= 0;
-    visited[2][0] <= 1;
-    visited[2][1] <= 0;
+    visited[2][0] <= 0; // here
+    visited[2][1] <= 0; 
     visited[2][2] <= 0;
     visited[2][3] <= 0;
     visited[3][0] <= 0;
