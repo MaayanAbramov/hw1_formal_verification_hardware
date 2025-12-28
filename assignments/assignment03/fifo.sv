@@ -85,7 +85,7 @@ module fifo #(
 wire select;  //non-deterministic..
 
 reg [WIDTH-1:0] sampled_data;
-reg [PTRW : 0] items_ahead;
+reg signed [PTRW : 0] items_ahead;
 reg is_sampled;
 
 always @(posedge clk) 
@@ -113,6 +113,7 @@ begin
           else
             begin
               is_sampled <= 1'b0;
+
             end
         end
     end
