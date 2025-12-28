@@ -106,7 +106,7 @@ begin
         end
       else if (is_sampled && do_deq) // CHANGED HERE
         begin
-          if(items_ahead > 0)
+          if(items_ahead >= 0)
             begin
               items_ahead <= items_ahead - 1'b1;
             end
