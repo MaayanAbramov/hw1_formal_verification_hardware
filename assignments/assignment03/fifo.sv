@@ -85,40 +85,10 @@ module fifo #(
 wire select;  //non-deterministic..
 
 reg [WIDTH-1:0] value;
-reg signed [PTRW : 0] items_ahead;
-reg is_sampled;
 
-always @(posedge clk) 
-begin
-  if (~rst) 
-    begin
-      is_sampled <= 1'b0;
-      items_ahead <= '0;
-      value <= '0;
-    end
-  else
-    begin
-      if (do_enq && !is_sampled && select)
-        begin
-          value <= enq_data;
-          items_ahead <= count; // CHANGED HERE
-          is_sampled <= 1'b1;
-        end
-      if (is_sampled && do_deq) // CHANGED HERE
-        begin
-          if(items_ahead > 0)
-            begin
-              items_ahead <= items_ahead - 1'b1;
-            end
-          else
-            begin
-              is_sampled <= 1'b0;
 
-            end
-        end
-    end
-end
-
+    
+stable_value: assume property (@(posedge clk) 1 ##1 $stable(value));
 property P;
     @(posedge clk)  (do_enq && enq_data == value |-> do_deq[*DEPTH] implies ##[1:DEPTH] $past(do_deq) && deq_data == value);
 endproperty
