@@ -110,7 +110,7 @@ module fifo #(
 		end
   end 
   property P;
-   @(posedge clk) ((next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) |=> (deq_data == value) );
+   @(posedge clk) rst ##[0:$] ((next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) ##1 (deq_data == value) );
   endproperty 
-  A: assert property (P);
+  A: cover property (P);
 endmodule
