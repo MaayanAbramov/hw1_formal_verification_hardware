@@ -85,6 +85,7 @@ module fifo #(
 	 begin
 		is_sampled <= 1'b0;
 		items_ahead <= '0;
+    value <= '0; 
 		next_cycle_compare_value_and_deq_data <= 1'b0; // this is only for cover purposes. this should be changed to 1'b0;	
 	end
 	if(!is_sampled && en && do_enq)
@@ -110,7 +111,7 @@ module fifo #(
 		end
   end 
   property P;
-   @(posedge clk) rst ##[0:$] ((next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) ##1 (deq_data == value) );
+   @(posedge clk) rst ##[0:$] ((is_sampled && items_ahead == 0 && next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) |=> (deq_data == value) );
   endproperty 
-  A: cover property (P);
+  A: assert property (P);
 endmodule
