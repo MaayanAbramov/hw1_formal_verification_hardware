@@ -79,7 +79,7 @@ module fifo #(
   logic [WIDTH-1:0] value;
   logic is_sampled;
   logic [PTRW:0] items_ahead;
-  always @(posedge clk)
+  always_ff @(posedge clk or negedge rst)
   begin
 	if(~rst)
 	 begin
