@@ -43,7 +43,7 @@ end
 
 property P;
     @(posedge clk)
-    (gnt |-> (A2 != 6'b000000)) && (!(!gnt && (A2[5] == 1'b1)));
+    ((gnt |-> (A2 != 6'b000000)) && (!(!gnt && (A2[5] == 1'b1))));
 endproperty
 
 A: assert property (P);
