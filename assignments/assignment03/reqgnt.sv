@@ -14,7 +14,10 @@ module reqgnt(
 // IMPLEMENT THE AUXILIARY CODE HERE
 
 // count number of open reqs
-ralways @(posedge clk) begin
+reg [0:1] A1;
+reg [0:5] A2;
+
+always @(posedge clk) begin
     if (rst) begin
         A1 <= 2'b00;
         A2 <= 6'b000000;
