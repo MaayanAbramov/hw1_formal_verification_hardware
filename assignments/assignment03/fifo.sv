@@ -111,7 +111,7 @@ module fifo #(
 		end
   end 
   property P;
-   @(posedge clk) rst ##[0:$] ((is_sampled && items_ahead == 0 && next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) |=> (deq_data == value) );
+   @(posedge clk) ((is_sampled && items_ahead == 0 && next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) |=> (deq_data == value) );
   endproperty 
   A: assert property (P);
 endmodule
