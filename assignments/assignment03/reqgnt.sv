@@ -14,8 +14,8 @@ module reqgnt(
 // IMPLEMENT THE AUXILIARY CODE HERE
 
 // count number of open reqs
-reg [0:1] A1;
-reg [0:5] A2;
+reg [1:0] A1;
+reg [5:0] A2;
 
 always @(posedge clk) begin
     if (rst) begin
