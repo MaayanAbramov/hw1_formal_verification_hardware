@@ -1,6 +1,6 @@
 
 module fifo #(
-  parameter int unsigned DEPTH = 8,   // number of entries
+  parameter int unsigned DEPTH = 64,   // number of entries
   parameter int unsigned WIDTH = 64   // data width
 ) (
   input  logic                 clk,
@@ -81,25 +81,28 @@ module fifo #(
 always @(posedge clk) begin
   if (!rst) begin
     is_sampled  <= 1'b0;
-    items_ahead <= '0;
-    value       <= '0;
+    items_ahead <= 3'h5;
+    value       <= 1'b1;
   end else begin
     if (!is_sampled && do_enq&&en) begin
       is_sampled  <= 1'b1;
       value       <= enq_data;
-      items_ahead <= count - (do_deq ? 1 : 0);
+      items_ahead <= do_deq? count-1'b1 : count ;
     end else if (is_sampled && do_deq) begin
       if (items_ahead > 0)
+	begin
         items_ahead <= items_ahead - 1'b1;
-
-      if (items_ahead == 1)
-        is_sampled <= 1'b0;
+	end
+     else 
+	begin
+        	is_sampled <= 1'b0;
+	end
     end
   end
 end
 property P;
   @(posedge clk)
-  (is_sampled && items_ahead == 1 && do_deq)
+  (is_sampled && items_ahead == 0 && do_deq)
   |=> (deq_data == value);
 endproperty
 
