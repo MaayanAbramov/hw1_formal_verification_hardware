@@ -75,43 +75,33 @@ module fifo #(
     end
   end
   wire en;
-  logic next_cycle_compare_value_and_deq_data;
   logic [WIDTH-1:0] value;
   logic is_sampled;
   logic [PTRW:0] items_ahead;
-  always_ff @(posedge clk)
-  begin
-	if(~rst)
-	 begin
-		is_sampled <= 1'b0;
-		items_ahead <= '0;
-    value <= '0; 
-		next_cycle_compare_value_and_deq_data <= 1'b0; // this is only for cover purposes. this should be changed to 1'b0;	
-	end
-	if(!is_sampled && en && do_enq)
-	 begin
-	 	is_sampled <= 1'b1;
-		value <= enq_data;
-		items_ahead <= count;
-	 end
-	else
-		 begin
-			if(is_sampled && do_deq)
-			begin
-				if(items_ahead > 0 )
-				begin
-					items_ahead <= items_ahead -1'b1;	
-				end
-				if(items_ahead == 0) 
-				begin
-					next_cycle_compare_value_and_deq_data <= 1'b1;
-					is_sampled <= 1'b0;		
-				end
-			end
-		end
-  end 
-  property P;
-   @(posedge clk) ((is_sampled && items_ahead == 0 && next_cycle_compare_value_and_deq_data == 1'b1 && do_deq) |=> (deq_data == value) );
-  endproperty 
-  A: assert property (P);
+always @(posedge clk) begin
+  if (!rst) begin
+    is_sampled  <= 1'b0;
+    items_ahead <= '0;
+    value       <= '0;
+  end else begin
+    if (!is_sampled && do_enq&&en) begin
+      is_sampled  <= 1'b1;
+      value       <= enq_data;
+      items_ahead <= count - (do_deq ? 1 : 0);
+    end else if (is_sampled && do_deq) begin
+      if (items_ahead > 0)
+        items_ahead <= items_ahead - 1'b1;
+
+      if (items_ahead == 1)
+        is_sampled <= 1'b0;
+    end
+  end
+end
+property P;
+  @(posedge clk)
+  (is_sampled && items_ahead == 1 && do_deq)
+  |=> (deq_data == value);
+endproperty
+
+A: assert property (P);
 endmodule
