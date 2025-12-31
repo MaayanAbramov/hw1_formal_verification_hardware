@@ -49,4 +49,45 @@ endproperty
 
 A: assert property (P);
 
+
+ //Assumes:(delete this)
+ reg gnt_without_req;
+reg unanswered_req;
+
+reg [9:0] unanswered_req_shift_reg;
+
+always_ff @(posedge clk or posedge rst) begin
+    if (rst) begin
+        gnt_without_req <= 0;
+        unanswered_req <= 0;
+        unanswered_req_shift_reg <= 0;
+    end else begin
+        logic matched_req;
+
+        unanswered_req_shift_reg = {unanswered_req_shift_reg[8:0], req};
+        matched_req = 0;
+
+        if (gnt) begin
+            for (int i = 8; i >= 2; i = i - 1) begin
+                if (unanswered_req_shift_reg[i]) begin
+                    unanswered_req_shift_reg[i] = 0;
+                    matched_req = 1;
+                    break;
+                end
+            end
+
+            if (!matched_req) begin
+                gnt_without_req <= 1;
+            end
+        end
+
+        unanswered_req <= unanswered_req_shift_reg[9];
+    end
+end
+
+property P_1;
+    @(posedge clk) (!gnt_without_req) && (!unanswered_req);
+endproperty
+
+A_1: assume property (P_1);
 endmodule
