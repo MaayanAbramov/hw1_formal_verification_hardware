@@ -23,7 +23,7 @@ always @(posedge clk) begin
         A2 <= 7'b0000000;
     end else begin
         // ---- A1: 2-cycle request pipeline ----
-        A1[0] <= req;
+        A1 <= req;
 
         // ---- A2: age pending requests ----
         A2 <= {A2[5:0], A1};
