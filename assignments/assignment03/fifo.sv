@@ -100,14 +100,10 @@ always @(posedge clk) begin
     end
   end
 end
-generate
-for (genvar i=0 ; i<WIDTH ; i++) begin
-
  A: assert property ( @(posedge clk)
   (is_sampled && items_ahead == 0 && do_deq)
-  |=> (deq_data[i] == value[i]));
+  |=> (deq_data == value));
 
-end
-endgenerate
+
 //A: assert property (P);
 endmodule

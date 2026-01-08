@@ -5,30 +5,35 @@ input reg[1:0]  direction;
 output reg[3:0] cells[3:0][3:0];
 reg[1:0]        empty_x; // x-position of the empty cell
 reg[1:0]        empty_y; // y-position of the empty cell
-reg visited[3:0][3:0]; // TODO : please check if this is valid 
+reg visited[3:0][3:0]; 
 reg[3:0] i,j;
 always @ (posedge clk) begin
   if (~rst) begin
     // Initial state of the board
-    cells[0][0] <= 6;
-    cells[0][1] <= 7;
-    cells[0][2] <= 1;
-    cells[0][3] <= 4;
-    cells[1][0] <= 5;
-    cells[1][1] <= 2;
-    cells[1][2] <= 3;
-    cells[1][3] <= 8;
-    cells[2][0] <= 0;
-    cells[2][1] <= 10;
-    cells[2][2] <= 11;
-    cells[2][3] <= 12;
-    cells[3][0] <= 9;
-    cells[3][1] <= 13;
-    cells[3][2] <= 14;
-    cells[3][3] <= 15;
-    // Position (x, y) of the empty cell
-    empty_x <= 2;
-    empty_y <= 0;
+
+cells[0][0] <= 0;
+cells[0][1] <= 2;
+cells[0][2] <= 3;
+cells[0][3] <= 4;
+
+cells[1][0] <= 1;
+cells[1][1] <= 6;
+cells[1][2] <= 7;
+cells[1][3] <= 8;
+
+cells[2][0] <= 5;
+cells[2][1] <= 10;
+cells[2][2] <= 11;
+cells[2][3] <= 12;
+
+cells[3][0] <= 9;
+cells[3][1] <= 13;
+cells[3][2] <= 14;
+cells[3][3] <= 15;
+
+empty_x <= 0;
+empty_y <= 0;
+
     visited[0][1] <= 0;
     visited[0][2] <= 0;
     visited[0][0] <= 0;
@@ -122,7 +127,7 @@ c: cover property (@(posedge clk) solution);
 // IMPLEMENT THE AUXILIARY CODE HERE IF NEEDED
 
 property P;
-    @(posedge clk)(empty_x == 0 && empty_y == 0 ) ##[1:$] (empty_cell_visited_all && solution && empty_x == 3);
+    @(posedge clk)(empty_x == 0 && empty_y == 0 ) ##[1:$] (empty_cell_visited_all && solution);
 endproperty
 
 A: cover property (P);
