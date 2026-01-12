@@ -1,12 +1,39 @@
-TOOL:	xrun(64)	23.03-s007: Started on Jan 12, 2026 at 19:09:45 IST
+TOOL:	xrun(64)	23.03-s007: Started on Jan 12, 2026 at 19:15:13 IST
 xrun(64): 23.03-s007: (c) Copyright 1995-2023 Cadence Design Systems, Inc.
+Recompiling... reason: file './reqgnt.sv' is newer than expected.
+	expected: Mon Jan 12 17:56:14 2026
+	actual:   Mon Jan 12 19:15:02 2026
+file: reqgnt.sv
+	module worklib.reqgnt:sv
+		errors: 0, warnings: 0
+	Elaborating the design hierarchy:
+		Caching library 'worklib' ....... Done
+	Top level design units:
+		tb
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.tb:sv <0x621a889d>
+			streams:  13, words: 52253
+		worklib.reqgnt:sv <0x45eb488b>
+			streams:   7, words:  7183
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		              Instances  Unique
+		Modules:              2       2
+		Registers:           20      20
+		Scalar wires:         4       -
+		Always blocks:        9       9
+		Initial blocks:       5       5
+		Pseudo assignments:   4       -
+		Assertions:           1       1
+	Writing initial simulation snapshot: worklib.tb:sv
 Loading snapshot worklib.tb:sv .................... Done
 xcelium> source /eda/cadence/2023-24/RHELx86/XCELIUM_23.03.007/tools/xcelium/files/xmsimrc
 xcelium> run
 === STARTING REQGNT VERIFICATION TEST (WITH RESET) ===
 
 T=0 | A1=x | A2=xxxxxxx | req=0 gnt=0
-xmsim: *E,ASRTST (./reqgnt.sv,59): (time 5 NS) Assertion tb.dut.A has failed 
 T=5 | A1=0 | A2=0000000 | req=0 gnt=0
 [T=25] Scenario 1: Good Request (3 cycles)
 T=30 | A1=0 | A2=0000000 | req=1 gnt=0
@@ -112,7 +139,7 @@ T=635 | A1=1 | A2=0000000 | req=1 gnt=0
 T=640 | A1=1 | A2=0000000 | req=0 gnt=1
   [@645] GNT rose | A2 state: 0000000
     -> ALERT: Granting with no pending requests!
-xmsim: *E,ASRTST (./reqgnt.sv,59): (time 645 NS) Assertion tb.dut.A has failed 
+xmsim: *E,ASRTST (./reqgnt.sv,48): (time 645 NS) Assertion tb.dut.A has failed 
 T=645 | A1=0 | A2=0000000 | req=0 gnt=1
 T=650 | A1=0 | A2=0000000 | req=0 gnt=0
 
@@ -120,7 +147,7 @@ T=650 | A1=0 | A2=0000000 | req=0 gnt=0
 T=700 | A1=0 | A2=0000000 | req=0 gnt=1
   [@705] GNT rose | A2 state: 0000000
     -> ALERT: Granting with no pending requests!
-xmsim: *E,ASRTST (./reqgnt.sv,59): (time 705 NS) Assertion tb.dut.A has failed 
+xmsim: *E,ASRTST (./reqgnt.sv,48): (time 705 NS) Assertion tb.dut.A has failed 
 T=710 | A1=0 | A2=0000000 | req=0 gnt=0
 
 [T=755] Scenario 10: Too Slow (>8 cycles) - EXPECT ERROR:
@@ -135,15 +162,15 @@ T=805 | A1=0 | A2=0001000 | req=0 gnt=0
 T=815 | A1=0 | A2=0010000 | req=0 gnt=0
 T=825 | A1=0 | A2=0100000 | req=0 gnt=0
 T=835 | A1=0 | A2=1000000 | req=0 gnt=0
-xmsim: *E,ASRTST (./reqgnt.sv,59): (time 845 NS) Assertion tb.dut.A has failed 
+xmsim: *E,ASRTST (./reqgnt.sv,48): (time 845 NS) Assertion tb.dut.A has failed 
 T=845 | A1=0 | A2=0000000 | req=0 gnt=0
 T=860 | A1=0 | A2=0000000 | req=0 gnt=1
   [@865] GNT rose | A2 state: 0000000
     -> ALERT: Granting with no pending requests!
-xmsim: *E,ASRTST (./reqgnt.sv,59): (time 865 NS) Assertion tb.dut.A has failed 
+xmsim: *E,ASRTST (./reqgnt.sv,48): (time 865 NS) Assertion tb.dut.A has failed 
 
 === ALL TESTS COMPLETED ===
 Simulation complete via $finish(1) at time 870 NS + 0
 ./reqgnt_tb.sv:132         $finish;
 xcelium> exit
-TOOL:	xrun(64)	23.03-s007: Exiting on Jan 12, 2026 at 19:09:53 IST  (total: 00:00:08)
+TOOL:	xrun(64)	23.03-s007: Exiting on Jan 12, 2026 at 19:15:24 IST  (total: 00:00:11)
