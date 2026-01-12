@@ -16,7 +16,18 @@ module reqgnt(
 // count number of open reqs
 reg  A1;
 reg [6:0] A2;
-
+//auxilary - delete
+int unsigned cnt;
+int unsigned fifo_count;
+always_ff @(posedge clk or posedge rst) begin
+if (rst) begin
+cnt <=0 ;
+fifo_count <=0;
+end else begin
+cnt <=cnt;
+fifo_count <=fifo_count;
+end
+end
 always @(posedge clk) begin
     if (rst) begin
         A1 <= 1'b0;
