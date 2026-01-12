@@ -100,10 +100,10 @@ always @(posedge clk) begin
     end
   end
 end
- A: assert property ( @(posedge clk)
+ P: assert property ( @(posedge clk)
   (is_sampled && items_ahead == 0 && do_deq)
   |=> (deq_data == value));
 
 
-//A: assert property (P);
+A: assert property (P);
 endmodule
