@@ -1,0 +1,149 @@
+TOOL:	xrun(64)	23.03-s007: Started on Jan 12, 2026 at 19:09:45 IST
+xrun(64): 23.03-s007: (c) Copyright 1995-2023 Cadence Design Systems, Inc.
+Loading snapshot worklib.tb:sv .................... Done
+xcelium> source /eda/cadence/2023-24/RHELx86/XCELIUM_23.03.007/tools/xcelium/files/xmsimrc
+xcelium> run
+=== STARTING REQGNT VERIFICATION TEST (WITH RESET) ===
+
+T=0 | A1=x | A2=xxxxxxx | req=0 gnt=0
+xmsim: *E,ASRTST (./reqgnt.sv,59): (time 5 NS) Assertion tb.dut.A has failed 
+T=5 | A1=0 | A2=0000000 | req=0 gnt=0
+[T=25] Scenario 1: Good Request (3 cycles)
+T=30 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@35] REQ rose
+T=35 | A1=1 | A2=0000000 | req=1 gnt=0
+T=40 | A1=1 | A2=0000000 | req=0 gnt=0
+T=45 | A1=0 | A2=0000001 | req=0 gnt=0
+T=55 | A1=0 | A2=0000010 | req=0 gnt=0
+T=60 | A1=0 | A2=0000010 | req=0 gnt=1
+  [@65] GNT rose | A2 state: 0000010
+T=65 | A1=0 | A2=0000000 | req=0 gnt=1
+T=70 | A1=0 | A2=0000000 | req=0 gnt=0
+  -> PASSED
+
+[T=115] Scenario 2: Min Boundary (2 cycles)
+T=120 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@125] REQ rose
+T=125 | A1=1 | A2=0000000 | req=1 gnt=0
+T=130 | A1=1 | A2=0000000 | req=0 gnt=0
+T=135 | A1=0 | A2=0000001 | req=0 gnt=0
+T=140 | A1=0 | A2=0000001 | req=0 gnt=1
+  [@145] GNT rose | A2 state: 0000001
+T=145 | A1=0 | A2=0000000 | req=0 gnt=1
+T=150 | A1=0 | A2=0000000 | req=0 gnt=0
+  -> PASSED
+
+[T=195] Scenario 3: Safe Timing (6 cycles)
+T=200 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@205] REQ rose
+T=205 | A1=1 | A2=0000000 | req=1 gnt=0
+T=210 | A1=1 | A2=0000000 | req=0 gnt=0
+T=215 | A1=0 | A2=0000001 | req=0 gnt=0
+T=225 | A1=0 | A2=0000010 | req=0 gnt=0
+T=235 | A1=0 | A2=0000100 | req=0 gnt=0
+T=245 | A1=0 | A2=0001000 | req=0 gnt=0
+T=255 | A1=0 | A2=0010000 | req=0 gnt=0
+T=260 | A1=0 | A2=0010000 | req=0 gnt=1
+  [@265] GNT rose | A2 state: 0010000
+T=265 | A1=0 | A2=0000000 | req=0 gnt=1
+T=270 | A1=0 | A2=0000000 | req=0 gnt=0
+  -> PASSED
+
+[T=315] Scenario 3B: Max Boundary (8 cycles)
+T=320 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@325] REQ rose
+T=325 | A1=1 | A2=0000000 | req=1 gnt=0
+T=330 | A1=1 | A2=0000000 | req=0 gnt=0
+T=335 | A1=0 | A2=0000001 | req=0 gnt=0
+T=345 | A1=0 | A2=0000010 | req=0 gnt=0
+T=355 | A1=0 | A2=0000100 | req=0 gnt=0
+T=365 | A1=0 | A2=0001000 | req=0 gnt=0
+T=375 | A1=0 | A2=0010000 | req=0 gnt=0
+T=385 | A1=0 | A2=0100000 | req=0 gnt=0
+T=395 | A1=0 | A2=1000000 | req=0 gnt=0
+T=400 | A1=0 | A2=1000000 | req=0 gnt=1
+  [@405] GNT rose | A2 state: 1000000
+T=405 | A1=0 | A2=0000000 | req=0 gnt=1
+T=410 | A1=0 | A2=0000000 | req=0 gnt=0
+  -> PASSED
+
+[T=455] Scenario 4: Multiple Requests
+T=460 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@465] REQ rose
+T=465 | A1=1 | A2=0000000 | req=1 gnt=0
+T=470 | A1=1 | A2=0000000 | req=0 gnt=0
+T=475 | A1=0 | A2=0000001 | req=0 gnt=0
+T=480 | A1=0 | A2=0000001 | req=1 gnt=0
+  [@485] REQ rose
+T=485 | A1=1 | A2=0000010 | req=1 gnt=0
+T=490 | A1=1 | A2=0000010 | req=0 gnt=0
+T=495 | A1=0 | A2=0000101 | req=0 gnt=0
+T=500 | A1=0 | A2=0000101 | req=1 gnt=0
+  [@505] REQ rose
+T=505 | A1=1 | A2=0001010 | req=1 gnt=0
+T=510 | A1=1 | A2=0001010 | req=0 gnt=0
+T=515 | A1=0 | A2=0010101 | req=0 gnt=0
+T=525 | A1=0 | A2=0101010 | req=0 gnt=0
+T=530 | A1=0 | A2=0101010 | req=0 gnt=1
+  [@535] GNT rose | A2 state: 0101010
+T=535 | A1=0 | A2=0010100 | req=0 gnt=1
+T=540 | A1=0 | A2=0010100 | req=0 gnt=0
+T=545 | A1=0 | A2=0101000 | req=0 gnt=0
+T=550 | A1=0 | A2=0101000 | req=0 gnt=1
+  [@555] GNT rose | A2 state: 0101000
+T=555 | A1=0 | A2=0010000 | req=0 gnt=1
+T=560 | A1=0 | A2=0010000 | req=0 gnt=0
+T=565 | A1=0 | A2=0100000 | req=0 gnt=0
+T=570 | A1=0 | A2=0100000 | req=0 gnt=1
+  [@575] GNT rose | A2 state: 0100000
+T=575 | A1=0 | A2=0000000 | req=0 gnt=1
+T=580 | A1=0 | A2=0000000 | req=0 gnt=0
+  -> PASSED
+
+
+========================================
+BAD BEHAVIOR TESTS (Should show ERRORS)
+========================================
+
+[T=625] Scenario 6: Too Fast (Age=1) - EXPECT ERROR:
+T=630 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@635] REQ rose
+T=635 | A1=1 | A2=0000000 | req=1 gnt=0
+T=640 | A1=1 | A2=0000000 | req=0 gnt=1
+  [@645] GNT rose | A2 state: 0000000
+    -> ALERT: Granting with no pending requests!
+xmsim: *E,ASRTST (./reqgnt.sv,59): (time 645 NS) Assertion tb.dut.A has failed 
+T=645 | A1=0 | A2=0000000 | req=0 gnt=1
+T=650 | A1=0 | A2=0000000 | req=0 gnt=0
+
+[T=695] Scenario 8: Spurious Grant (A2=0) - EXPECT ERROR:
+T=700 | A1=0 | A2=0000000 | req=0 gnt=1
+  [@705] GNT rose | A2 state: 0000000
+    -> ALERT: Granting with no pending requests!
+xmsim: *E,ASRTST (./reqgnt.sv,59): (time 705 NS) Assertion tb.dut.A has failed 
+T=710 | A1=0 | A2=0000000 | req=0 gnt=0
+
+[T=755] Scenario 10: Too Slow (>8 cycles) - EXPECT ERROR:
+T=760 | A1=0 | A2=0000000 | req=1 gnt=0
+  [@765] REQ rose
+T=765 | A1=1 | A2=0000000 | req=1 gnt=0
+T=770 | A1=1 | A2=0000000 | req=0 gnt=0
+T=775 | A1=0 | A2=0000001 | req=0 gnt=0
+T=785 | A1=0 | A2=0000010 | req=0 gnt=0
+T=795 | A1=0 | A2=0000100 | req=0 gnt=0
+T=805 | A1=0 | A2=0001000 | req=0 gnt=0
+T=815 | A1=0 | A2=0010000 | req=0 gnt=0
+T=825 | A1=0 | A2=0100000 | req=0 gnt=0
+T=835 | A1=0 | A2=1000000 | req=0 gnt=0
+xmsim: *E,ASRTST (./reqgnt.sv,59): (time 845 NS) Assertion tb.dut.A has failed 
+T=845 | A1=0 | A2=0000000 | req=0 gnt=0
+T=860 | A1=0 | A2=0000000 | req=0 gnt=1
+  [@865] GNT rose | A2 state: 0000000
+    -> ALERT: Granting with no pending requests!
+xmsim: *E,ASRTST (./reqgnt.sv,59): (time 865 NS) Assertion tb.dut.A has failed 
+
+=== ALL TESTS COMPLETED ===
+Simulation complete via $finish(1) at time 870 NS + 0
+./reqgnt_tb.sv:132         $finish;
+xcelium> exit
+TOOL:	xrun(64)	23.03-s007: Exiting on Jan 12, 2026 at 19:09:53 IST  (total: 00:00:08)
