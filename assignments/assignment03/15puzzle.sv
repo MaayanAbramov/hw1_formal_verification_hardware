@@ -5,8 +5,7 @@ input reg[1:0]  direction;
 output reg[3:0] cells[3:0][3:0];
 reg[1:0]        empty_x; // x-position of the empty cell
 reg[1:0]        empty_y; // y-position of the empty cell
-reg visited[3:0][3:0]; 
-reg[3:0] i,j;
+reg visited[3:0][3:0];
 always @ (posedge clk) begin
   if (~rst) begin
     // Initial state of the board

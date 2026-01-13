@@ -81,10 +81,10 @@ module fifo #(
 always @(posedge clk) begin
   if (!rst) begin
     is_sampled  <= 1'b0;
-    items_ahead <= 3'h5;
-    value       <= 1'b1;
+    items_ahead <= '0;
+    value       <= '0;
   end else begin
-    if (!is_sampled && do_enq&&en) begin
+    if (!is_sampled && do_enq && en) begin
       is_sampled  <= 1'b1;
       value       <= enq_data;
       items_ahead <= do_deq? count-1'b1 : count ;
