@@ -7,6 +7,8 @@ reset rst
 # Don't change anything above this line.
 
 # Put the abstractions for the proof of <embedded>::wrap.valid_id here.
+stopat data_in
+stopat generator_i.id_cnt
 stopat calculator_i.res
 # Don't change anything below this line.
 
