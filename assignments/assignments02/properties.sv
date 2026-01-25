@@ -13,7 +13,11 @@ module properties #(parameter FLOORS = 5)
 );
 logic [FLOORS-1:0] floor_on_first_cycle;
 logic first_clock;
-
+reg firstCycle;
+always @(posedge clk)
+if (rst) firstCycle <= 1;
+else firstCycle <= 0;
+assume_Q1b_A: assert property (@(posedge clk) firstCycle |-> $onehot(currentFloor));
 always @(posedge clk) begin
     if (rst) begin
         first_clock <= 1'b1;         // first cycle after reset
